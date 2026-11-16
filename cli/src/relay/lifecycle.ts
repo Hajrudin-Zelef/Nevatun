@@ -391,7 +391,7 @@ export const ensureExtensionConnected = Effect.fn("RelayLifecycle.ensureExtensio
     Effect.retry({
       times: options.retryTimes ?? Math.ceil(extensionReconnectWaitMs / extensionReconnectProbeMs),
       schedule: Schedule.spaced(options.retryDelayMs ?? extensionReconnectProbeMs),
-      while: (error) => (error instanceof ExtensionDisconnected && !error.needsPairing && !error.unresponsive) || isRelayStartingOrUnreachable(error),
+      while: (error) => (error instanceof ExtensionDisconnected && !error.needsPairing) || isRelayStartingOrUnreachable(error),
     }),
   )
 })

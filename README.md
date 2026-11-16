@@ -1,3 +1,11 @@
+# Nevatun
+
+Nevatun is a fork of [browse](https://github.com/anomalyco/browse) (MIT), pinned to upstream tag
+**v0.0.17** (`ac696c86573dbd97033ee2abdc70526a4b417e0d`) and stabilized for long-lived MV3
+extension links. See `NOTICE` for the exact changes.
+
+---
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.png">
   <img src="assets/banner-light.png" alt="browse: let your AI agents use your real browser. An isometric desk computer whose screen shows a web browser with an agent's tab group, cabled to a small relay box.">

@@ -1,0 +1,21 @@
+Nevatun
+=======
+
+Nevatun is a fork of browse, https://github.com/anomalyco/browse
+Copyright (c) Anomaly and the browse contributors.
+Licensed under the MIT License; see LICENSE in this repository.
+
+Upstream base: tag v0.0.17, commit ac696c86573dbd97033ee2abdc70526a4b417e0d.
+
+Changes in this fork
+--------------------
+- The user-facing command and the MCP entry are "nevatun" (wrapper + agent config); internal
+  identifiers (MCP_NAME, binaryName, file paths, OPENCODE_BROWSER_* env) stay upstream-compatible.
+- Extension: the 20 s heartbeat now also calls chrome.runtime.getPlatformInfo(), which
+  resets Chrome's MV3 service-worker idle timer, so the relay link is not dropped by the
+  worker sleeping.
+- Relay: a tool call waits through the extension reconnect window even when the browser was
+  marked unresponsive, instead of failing at once.
+- Relay: default OPENCODE_BROWSER_PING_TIMEOUT_MS raised from 10 s to 30 s to match the
+  extension reconnect alarm period.
+- Relay: in remote mode (hostname 0.0.0.0) the extension WebSocket upgrade skips the Host header check so it can arrive through a local proxy (tailscale serve) carrying the browser tailnet Host. The Origin check and pairing still apply.

@@ -121,7 +121,7 @@ test("the timeout environment parser clamps and falls back", () => {
   expect(configuredTimeoutMs(undefined, extensionCommandTimeout)).toBe(30_000)
   expect(configuredTimeoutMs("", extensionCommandTimeout)).toBe(30_000)
   expect(configuredTimeoutMs("not-a-number", extensionCommandTimeout)).toBe(30_000)
-  expect(configuredTimeoutMs("1500.5", extensionPingTimeout)).toBe(10_000)
+  expect(configuredTimeoutMs("1500.5", extensionPingTimeout)).toBe(30_000)
   expect(configuredTimeoutMs("100", extensionCommandTimeout)).toBe(15_000)
   expect(configuredTimeoutMs("1000000", extensionCommandTimeout)).toBe(300_000)
   expect(configuredTimeoutMs("250", extensionPingTimeout)).toBe(1_000)

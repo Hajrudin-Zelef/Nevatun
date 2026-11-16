@@ -352,6 +352,9 @@ export function createAgentRelay(input: { changed: (state: AgentRelayState) => v
       clearInterval(keepalive)
       keepalive = setInterval(() => {
         if (socket === current) send({ method: "pong" })
+        // Chrome stops an MV3 worker after ~30 s of inactivity, and a WebSocket send does not reset that timer.
+        // A chrome.* call does, so a long-idle relay link stays up instead of reconnecting on every alarm.
+        void chrome.runtime.getPlatformInfo()
       }, KEEPALIVE)
       connectedAt = Date.now()
       discovered = provenDiscovered(discovered, port)

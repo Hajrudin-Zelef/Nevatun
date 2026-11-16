@@ -42,7 +42,7 @@ export type ExtensionTimeoutSetting = {
  * minimum leaves room for the extension's own 12 s tabs.create budget. */
 export const extensionCommandTimeout: ExtensionTimeoutSetting = { fallback: 30_000, min: 15_000, max: 300_000 }
 /** OPENCODE_BROWSER_PING_TIMEOUT_MS: how long a ping may go unanswered before the browser counts as asleep. */
-export const extensionPingTimeout: ExtensionTimeoutSetting = { fallback: 10_000, min: 1_000, max: 30_000 }
+export const extensionPingTimeout: ExtensionTimeoutSetting = { fallback: 30_000, min: 1_000, max: 30_000 }
 
 /** A timeout from its setting's environment value: a whole number clamped to the setting's range, else its fallback. */
 export function configuredTimeoutMs(value: string | undefined, setting: ExtensionTimeoutSetting): number {

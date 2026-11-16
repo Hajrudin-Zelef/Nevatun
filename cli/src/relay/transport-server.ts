@@ -23,6 +23,8 @@ import { sendUpgradeError } from "./process-guard.ts"
 export interface TransportServerDeps {
   readonly host: string
   readonly port: number
+  /** Listening on 0.0.0.0: the browser reaches the relay through a local proxy (tailscale serve) with its own Host. */
+  readonly remote: boolean
   readonly endpointUrl: string
   readonly authToken: string
   readonly additionalChromeExtensionOrigins: ReadonlySet<string>
@@ -47,6 +49,7 @@ export function createRelayTransportServers(deps: TransportServerDeps): {
   const {
     host,
     port,
+    remote,
     endpointUrl,
     authToken,
     additionalChromeExtensionOrigins,
@@ -123,7 +126,11 @@ export function createRelayTransportServers(deps: TransportServerDeps): {
       socket.destroy()
       return
     }
-    const hostError = local ? validateHostHeader({ hostHeader: request.headers.host, host, port }) : undefined
+    // A relay opened to other computers is reached through a local proxy (tailscale serve, a tunnel) that makes
+    // the connection look local while carrying the browser's own Host. The extension link is authenticated by
+    // pairing and its Origin, so the Host check would only reject the legitimate browser there.
+    const extensionUpgrade = requestUrl.pathname === "/extension"
+    const hostError = local && !(remote && extensionUpgrade) ? validateHostHeader({ hostHeader: request.headers.host, host, port }) : undefined
     if (hostError) {
       sendUpgradeError({ socket, status: 403, message: hostError })
       return

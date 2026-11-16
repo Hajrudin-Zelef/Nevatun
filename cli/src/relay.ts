@@ -794,6 +794,7 @@ const makeRelay = Effect.fnUntraced(function* (options: {
   const { httpServer, websocketServer } = createRelayTransportServers({
     host,
     port,
+    remote: listenHost === "0.0.0.0",
     endpointUrl,
     authToken,
     additionalChromeExtensionOrigins,
